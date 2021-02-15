@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import HomePage from "./pages/HomePage";
+import BattlePage from "./pages/BattlePage";
+import CharacterPage from "./pages/CharacterPage";
+import theme, { ThemeProvider } from "./theme";
+import { ROUTES } from "./constants";
+import "./App.css";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <NavBar />
+        <Switch>
+          <Route path={ROUTES.CHARACTER} component={CharacterPage} />
+          <Route path={ROUTES.BATTLE} component={BattlePage} />
+          <Route exact path={ROUTES.HOME} component={HomePage} />
+          <Redirect to={{ pathname: ROUTES.HOME }} />
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
